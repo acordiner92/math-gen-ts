@@ -6,7 +6,9 @@
   "scripts": {
     "start": "nodemon",
     "format": "prettier --check \"src/**/*.{js,jsx,ts,tsx}\"",
-    "lint": "eslint ./src"
+    "lint": "eslint ./src",
+    "db:create": "db-migrate create $NAME -m './db/migrations' --sql-file",
+    "db:migrate": "db-migrate up -m './db/migrations' --sql-file"
   },
   "repository": {
     "type": "git",
@@ -19,8 +21,11 @@
   },
   "homepage": "https://github.com/acordiner92/math-gen-ts#readme",
   "devDependencies": {
+    "@types/pg": "^7.14.11",
     "@typescript-eslint/eslint-plugin": "^4.23.0",
     "@typescript-eslint/parser": "^4.23.0",
+    "db-migrate": "^0.11.12",
+    "db-migrate-pg": "^1.2.2",
     "esbuild-register": "^2.5.0",
     "eslint": "^7.26.0",
     "eslint-config-prettier": "^8.3.0",
@@ -37,6 +42,8 @@
     "@marblejs/middleware-io": "^3.5.0",
     "@marblejs/middleware-logger": "^3.5.0",
     "fp-ts": "^2.10.5",
-    "rxjs": "^6.5.3"
+    "pg": "^8.6.0",
+    "rxjs": "^6.5.3",
+    "zapatos": "^3.5.1"
   }
 }
