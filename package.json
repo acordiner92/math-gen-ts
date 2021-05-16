@@ -4,7 +4,7 @@
   "description": "",
   "main": "src/index.ts",
   "scripts": {
-    "start": "node -r esbuild-register ./src/index.ts",
+    "start": "nodemon",
     "format": "prettier --check \"src/**/*.{js,jsx,ts,tsx}\"",
     "lint": "eslint ./src"
   },
@@ -26,7 +26,17 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-fp": "^2.3.0",
     "eslint-plugin-prettier": "^3.4.0",
+    "nodemon": "^2.0.7",
     "prettier": "^2.3.0",
     "typescript": "^4.2.4"
+  },
+  "dependencies": {
+    "@marblejs/core": "^3.5.0",
+    "@marblejs/middleware-body": "^3.5.0",
+    "@marblejs/middleware-cors": "^3.5.0",
+    "@marblejs/middleware-io": "^3.5.0",
+    "@marblejs/middleware-logger": "^3.5.0",
+    "fp-ts": "^2.10.5",
+    "rxjs": "^6.5.3"
   }
 }
