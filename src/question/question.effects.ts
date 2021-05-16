@@ -1,14 +1,14 @@
 import { r } from '@marblejs/core';
 import { mapTo } from 'rxjs/operators';
 
-export const api$ = r.pipe(
+export const questionCreated$ = r.pipe(
   r.matchPath('/'),
   r.matchType('GET'),
   r.useEffect(req$ =>
     req$.pipe(
       mapTo({
         body: {
-          message: 'Hello, world!',
+          message: 'Get question data',
         },
       }),
     ),
