@@ -7,7 +7,7 @@ const validateRequest = requestValidator$({
   body: CreateQuestionDto,
 });
 
-export const questionCreated$ = r.pipe(
+export const createQuestion$ = r.pipe(
   r.matchPath('/'),
   r.matchType('POST'),
   r.useEffect(req$ =>

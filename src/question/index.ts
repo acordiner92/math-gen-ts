@@ -1,6 +1,6 @@
 import { combineRoutes } from '@marblejs/core';
-import { questionCreated$ } from './question.effects';
+import { createQuestion$ } from './question.effects';
 
 export const question$ = combineRoutes('/question', {
-  effects: [questionCreated$],
+  effects: [createQuestion$],
 });

@@ -1,6 +1,0 @@
-{
-  "db": {
-    "connectionString": "postgres://postgres:postgres@localhost:5432/math_gen"
-  },
-  "outDir": "./src/data"
-}

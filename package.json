@@ -33,6 +33,7 @@
     "eslint-plugin-prettier": "^3.4.0",
     "nodemon": "^2.0.7",
     "prettier": "^2.3.0",
+    "schemats": "^3.0.3",
     "typescript": "^4.2.4"
   },
   "dependencies": {
@@ -47,7 +48,6 @@
     "monocle-ts": "^2.3.10",
     "newtype-ts": "^0.3.4",
     "pg": "^8.6.0",
-    "rxjs": "^6.5.3",
-    "zapatos": "^3.5.1"
+    "rxjs": "^6.5.3"
   }
 }
