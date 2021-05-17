@@ -42,6 +42,10 @@
     "@marblejs/middleware-io": "^3.5.0",
     "@marblejs/middleware-logger": "^3.5.0",
     "fp-ts": "^2.10.5",
+    "io-ts": "^2.2.16",
+    "io-ts-types": "^0.5.16",
+    "monocle-ts": "^2.3.10",
+    "newtype-ts": "^0.3.4",
     "pg": "^8.6.0",
     "rxjs": "^6.5.3",
     "zapatos": "^3.5.1"
