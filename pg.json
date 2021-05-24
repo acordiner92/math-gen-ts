@@ -1,0 +1,14 @@
+{
+  "client": "pg",
+  "connection": {
+    "host": "localhost",
+    "user": "postgres",
+    "password": "postgres",
+    "database": "math_gen"
+  },
+  "interfaceNameFormat": "${table}Db",
+  "columnNameCasing": "camel",
+  "tableNameCasing": "pascal",
+  "folder": "src/data",
+  "filename": "types"
+}

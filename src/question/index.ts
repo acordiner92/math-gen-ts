@@ -1,6 +1,10 @@
-import { combineRoutes } from '@marblejs/core';
-import { createQuestion$ } from './question.effects';
+import { Router } from 'express';
+import { createQuestion } from './question.controller';
+import * as QuestionRepository from './question.repository';
 
-export const question$ = combineRoutes('/question', {
-  effects: [createQuestion$],
-});
+export const router = Router();
+
+// eslint-disable-next-line fp/no-unused-expression
+router.post('/', (req, res, next) =>
+  createQuestion(req, res, next)(QuestionRepository.create)(),
+);

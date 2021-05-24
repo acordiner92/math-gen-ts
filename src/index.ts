@@ -1,14 +1,13 @@
-import { createServer } from '@marblejs/core';
-import { IO } from 'fp-ts/lib/IO';
-import { listener } from './http.listener';
+import express from 'express';
+import { log } from 'fp-ts/lib/Console';
+import http from 'http';
+import { router as questionRouter } from './question';
 
-const server = createServer({
-  port: 8080,
-  hostname: '127.0.0.1',
-  listener,
-});
-
-const main: IO<void> = async () => await (await server)();
+const app = express();
 
 // eslint-disable-next-line fp/no-unused-expression
-main();
+app.use('/api/v1/question', questionRouter);
+
+const httpServer = http.createServer(app);
+// eslint-disable-next-line fp/no-unused-expression
+httpServer.listen(8080, () => log('server listening on port 8080')());
