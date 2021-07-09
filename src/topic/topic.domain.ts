@@ -4,6 +4,7 @@ export const CreateTopicDto = t.type({
   name: t.string,
   identifier: t.string,
 });
+
 export type CreateTopicDto = t.TypeOf<typeof CreateTopicDto>;
 
 export type Topic = {
