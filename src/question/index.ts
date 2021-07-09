@@ -4,7 +4,7 @@ import { FastifyInstance } from 'fastify';
 import { createQuestion } from './question.controller';
 import * as QuestionRepository from './question.repository';
 
-export const routes = async (fastify: FastifyInstance): void => {
+export const routes = async (fastify: FastifyInstance): Promise<void> => {
   fastify.post('/question', async (request, reply) =>
     createQuestion(request, reply)(QuestionRepository.create),
   );
