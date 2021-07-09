@@ -10,10 +10,13 @@ const mapDbToDomain = (row: QuestionDb): Question => ({ ...row });
 export const create = (question: Question): TE.TaskEither<Error, Question> =>
   pipe(
     TE.tryCatch(
-      () =>
-        knex<QuestionDb>('question').insert(question).returning('id').first(),
-      () => new Error('Failed to create question.'),
+      () => knex<QuestionDb>('question').insert(question).returning('id'),
+      e => {
+        console.log(e);
+        return new Error('Failed to create question.');
+      },
     ),
+    TE.map(x => x[0]),
     TE.chain(
       flow(
         O.fromNullable,

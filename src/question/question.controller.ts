@@ -1,7 +1,7 @@
 import { pipe } from 'fp-ts/lib/function';
 import * as E from 'fp-ts/Either';
 import * as t from 'io-ts';
-import { Response } from 'express';
+import { FastifyRequest, FastifyReply } from 'fastify';
 import * as QuestionService from './question.service';
 import * as RTE from 'fp-ts/ReaderTaskEither';
 import * as RT from 'fp-ts/ReaderTask';
@@ -24,19 +24,14 @@ export type CreateQuestionEnv = (
   question: Question,
 ) => TE.TaskEither<Error, Question>;
 
-export const createQuestion: Handler<CreateQuestionEnv, Response> = (
-  req,
-  res,
-  next,
-) =>
+export const createQuestion = (
+  request: FastifyRequest,
+  _reply: FastifyReply,
+): RTE.ReaderTaskEither<CreateQuestionEnv, Error, Question> =>
   pipe(
-    req.body,
+    request.body,
     CreateQuestionDto.decode,
     E.mapLeft(formatValidationErrors('body')),
     RTE.fromEither,
     RTE.chain(QuestionService.createQuestion),
-    RTE.foldW(
-      e => RT.of(next(e)),
-      q => RT.of(res.send(q)),
-    ),
   );

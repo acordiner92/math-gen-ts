@@ -1,6 +1,7 @@
 import Knex from 'knex';
+import knexStringcase from 'knex-stringcase';
 
-export const knex = Knex({
+const options = knexStringcase({
   client: 'pg',
   connection: {
     host: '127.0.0.1',
@@ -9,3 +10,4 @@ export const knex = Knex({
     database: 'math_gen',
   },
 });
+export const knex = Knex(options);

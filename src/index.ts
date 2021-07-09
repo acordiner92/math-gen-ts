@@ -1,13 +1,13 @@
-import express from 'express';
-import { log } from 'fp-ts/lib/Console';
-import http from 'http';
-import { router as questionRouter } from './question';
+/* eslint-disable fp/no-unused-expression */
+import Fastify from 'fastify';
+import fastifyFunky from 'fastify-funky';
+import { routes } from './question';
 
-const app = express();
+const port = 8080;
+const server = Fastify({
+  logger: true,
+});
 
-// eslint-disable-next-line fp/no-unused-expression
-app.use('/api/v1/question', questionRouter);
-
-const httpServer = http.createServer(app);
-// eslint-disable-next-line fp/no-unused-expression
-httpServer.listen(8080, () => log('server listening on port 8080')());
+void server.register(fastifyFunky);
+void server.register(routes, { prefix: '/api/v1' });
+void server.listen(port);
