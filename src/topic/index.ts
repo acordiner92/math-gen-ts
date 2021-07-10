@@ -1,20 +1,18 @@
 import { FastifyInstance } from 'fastify';
-import * as TE from 'fp-ts/TaskEither';
-import * as O from 'fp-ts/Option';
 import { createTopic, deleteTopic, updateTopic } from './topic.controller';
-import { CreateTopicDto, Topic, UpdateTopicDto } from './topic.domain';
+import { CreateTopicDto, UpdateTopicDto } from './topic.domain';
 import * as TopicRepository from './topic.repository';
 import * as t from 'io-ts';
 import { validatorCompiler } from '../infrastructure';
 
-export type CreateTopicEnv = (topic: Topic) => TE.TaskEither<Error, Topic>;
+export type CreateTopicEnv = TopicRepository.Create;
 export type UpdateTopicEnv = {
-  updateTopic: (topic: Topic) => TE.TaskEither<Error, void>;
-  getTopicById: (topicId: string) => TE.TaskEither<Error, O.Option<Topic>>;
+  updateTopic: TopicRepository.Update;
+  getTopicById: TopicRepository.GetById;
 };
 export type DeleteTopicEnv = {
-  updateTopic: (topic: Topic) => TE.TaskEither<Error, void>;
-  getTopicById: (topicId: string) => TE.TaskEither<Error, O.Option<Topic>>;
+  updateTopic: TopicRepository.Update;
+  getTopicById: TopicRepository.GetById;
 };
 
 export const routes = async (

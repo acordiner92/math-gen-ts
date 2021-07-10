@@ -24,6 +24,7 @@ export const create = (topic: Topic): TE.TaskEither<Error, Topic> =>
     TE.chain(TE.fromOption(() => new Error('Unable to find inserted'))),
     TE.map(mapDbToDomain),
   );
+export type Create = typeof create;
 
 export const update = (existingTopic: Topic): TE.TaskEither<Error, void> =>
   pipe(
@@ -35,6 +36,7 @@ export const update = (existingTopic: Topic): TE.TaskEither<Error, void> =>
       () => new Error('Failed to create question.'),
     ),
   );
+export type Update = typeof update;
 
 export const getById = (
   topicId: string,
@@ -47,3 +49,4 @@ export const getById = (
     TE.map(flow(O.fromNullable)),
     TE.map(O.map(mapDbToDomain)),
   );
+export type GetById = typeof getById;
