@@ -1,6 +1,4 @@
-/* eslint-disable fp/no-unused-expression */
-/* eslint-disable fp/no-nil */
-import { FastifyInstance, FastifySchemaCompiler } from 'fastify';
+import { FastifyInstance } from 'fastify';
 import * as TE from 'fp-ts/TaskEither';
 import { createQuestion } from './question.controller';
 import * as t from 'io-ts';
@@ -12,7 +10,9 @@ export type CreateQuestionEnv = (
   question: Question,
 ) => TE.TaskEither<Error, Question>;
 
-export const routes = async (fastify: FastifyInstance): Promise<void> => {
+export const routes = async (
+  fastify: FastifyInstance,
+): Promise<FastifyInstance> =>
   fastify.post<{ Body: CreateQuestionDto }, unknown, t.Type<CreateQuestionDto>>(
     '/question',
     {
@@ -24,4 +24,3 @@ export const routes = async (fastify: FastifyInstance): Promise<void> => {
     async (request, reply) =>
       createQuestion(request, reply)(QuestionRepository.create),
   );
-};
