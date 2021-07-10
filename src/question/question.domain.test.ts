@@ -76,7 +76,7 @@ describe(getTestFileName(), () => {
       expect(remove(topic, new Date()).isDeleted).toBeTruthy();
     });
 
-    test('isDeleted is set to true', () => {
+    test('updatedAt is set to current date', () => {
       const currentDate = new Date();
       const topic = TopicFactory.build();
       expect(remove(topic, currentDate).updatedAt).toMatchObject(currentDate);
