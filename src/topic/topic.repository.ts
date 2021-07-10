@@ -25,6 +25,14 @@ export const create = (topic: Topic): TE.TaskEither<Error, Topic> =>
     TE.map(mapDbToDomain),
   );
 
+export const update = (existingTopic: Topic): TE.TaskEither<Error, void> =>
+  pipe(
+    TE.tryCatch(
+      () => knex<TopicDb>('topic').where({ id: topicId }).update(existingTopic),
+      () => new Error('Failed to create question.'),
+    ),
+  );
+
 export const getById = (
   topicId: string,
 ): TE.TaskEither<Error, O.Option<Topic>> =>

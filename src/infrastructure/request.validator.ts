@@ -5,16 +5,15 @@ import * as t from 'io-ts';
 import { failure } from 'io-ts/PathReporter';
 
 export const validatorCompiler =
-  <T, O, I>(validator: t.Type<T, O, I>): FastifySchemaCompiler<I> =>
-  () =>
-  (data: I) => {
-    return pipe(
+  <T>(): FastifySchemaCompiler<t.Type<T>> =>
+  ({ schema }) =>
+  (data: unknown) =>
+    pipe(
       data,
-      validator.decode,
+      schema.decode,
       E.mapLeft(failure),
       E.foldW(
         error => ({ error: new Error(error.join(', ')) }),
         value => ({ value }),
       ),
     );
-  };

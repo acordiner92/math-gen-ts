@@ -2,20 +2,44 @@
 /* eslint-disable fp/no-nil */
 import { FastifyInstance } from 'fastify';
 import * as TE from 'fp-ts/TaskEither';
-import { validatorCompiler } from '../infrastructure';
+import * as O from 'fp-ts/Option';
 import { createTopic } from './topic.controller';
-import { CreateTopicDto, Topic } from './topic.domain';
+import { CreateTopicDto, Topic, UpdateTopicDto } from './topic.domain';
 import * as TopicRepository from './topic.repository';
+import * as t from 'io-ts';
+import { validatorCompiler } from '../infrastructure';
 
 export type CreateTopicEnv = (topic: Topic) => TE.TaskEither<Error, Topic>;
-
-export const routes = async (fastify: FastifyInstance): Promise<void> => {
-  fastify.post<{ Body: CreateTopicDto }>(
-    '/topic',
-    {
-      validatorCompiler: validatorCompiler(CreateTopicDto),
-    },
-    async (request, reply) =>
-      createTopic(request, reply)(TopicRepository.create),
-  );
+export type UpdateTopicEnv = {
+  updateTopic: (topic: Topic) => TE.TaskEither<Error, void>;
+  getTopicById: (topicId: string) => TE.TaskEither<Error, O.Option<Topic>>;
 };
+export type DeleteTopicEnv = {
+  updateTopic: (topic: Topic) => TE.TaskEither<Error, void>;
+  getTopicById: (topicId: string) => TE.TaskEither<Error, O.Option<Topic>>;
+};
+
+export const routes = async (
+  fastify: FastifyInstance,
+): Promise<FastifyInstance> =>
+  fastify
+    .post<{ Body: CreateTopicDto }, unknown, t.Type<CreateTopicDto>>(
+      '/topic',
+      {
+        schema: {
+          body: CreateTopicDto,
+        },
+        validatorCompiler: validatorCompiler<CreateTopicDto>(),
+      },
+      async (request, reply) =>
+        createTopic(request, reply)(TopicRepository.create),
+    )
+    .patch<{ Body: UpdateTopicDto }, unknown, t.Type<UpdateTopicDto>>(
+      '/topic/:id',
+      {
+        schema: {},
+        validatorCompiler: validatorCompiler<UpdateTopicDto>(),
+      },
+      async (request, reply) =>
+        updateTopic(request, reply)(TopicRepository.create),
+    );
