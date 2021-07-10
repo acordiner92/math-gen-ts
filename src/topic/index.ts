@@ -1,9 +1,7 @@
-/* eslint-disable fp/no-unused-expression */
-/* eslint-disable fp/no-nil */
 import { FastifyInstance } from 'fastify';
 import * as TE from 'fp-ts/TaskEither';
 import * as O from 'fp-ts/Option';
-import { createTopic } from './topic.controller';
+import { createTopic, deleteTopic, updateTopic } from './topic.controller';
 import { CreateTopicDto, Topic, UpdateTopicDto } from './topic.domain';
 import * as TopicRepository from './topic.repository';
 import * as t from 'io-ts';
@@ -34,12 +32,33 @@ export const routes = async (
       async (request, reply) =>
         createTopic(request, reply)(TopicRepository.create),
     )
-    .patch<{ Body: UpdateTopicDto }, unknown, t.Type<UpdateTopicDto>>(
+    .patch<
+      { Body: UpdateTopicDto; Params: { id: string } },
+      unknown,
+      t.Type<UpdateTopicDto>
+    >(
       '/topic/:id',
       {
-        schema: {},
+        schema: {
+          body: UpdateTopicDto,
+        },
         validatorCompiler: validatorCompiler<UpdateTopicDto>(),
       },
       async (request, reply) =>
-        updateTopic(request, reply)(TopicRepository.create),
+        updateTopic(
+          request,
+          reply,
+        )({
+          updateTopic: TopicRepository.update,
+          getTopicById: TopicRepository.getById,
+        }),
+    )
+    .delete<{ Params: { id: string } }>('/topic/:id', async (request, reply) =>
+      deleteTopic(
+        request,
+        reply,
+      )({
+        updateTopic: TopicRepository.update,
+        getTopicById: TopicRepository.getById,
+      }),
     );

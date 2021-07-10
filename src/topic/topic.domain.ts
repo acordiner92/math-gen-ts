@@ -1,5 +1,4 @@
 import * as t from 'io-ts';
-import { option } from 'io-ts-types/option';
 import * as O from 'fp-ts/Option';
 import { pipe, constant } from 'fp-ts/lib/function';
 
@@ -9,9 +8,9 @@ export const CreateTopicDto = t.type({
 });
 export type CreateTopicDto = t.TypeOf<typeof CreateTopicDto>;
 
-export const UpdateTopicDto = t.type({
-  name: option(t.string),
-  identifier: option(t.string),
+export const UpdateTopicDto = t.partial({
+  name: t.string,
+  identifier: t.string,
 });
 export type UpdateTopicDto = t.TypeOf<typeof UpdateTopicDto>;
 
@@ -43,9 +42,14 @@ export const update = (
   currentDate: Date,
 ): Topic => ({
   ...existingTopic,
-  name: pipe(dto.name, O.getOrElse(constant(existingTopic.name))),
+  name: pipe(
+    dto.name,
+    O.fromNullable,
+    O.getOrElse(constant(existingTopic.name)),
+  ),
   identifier: pipe(
     dto.identifier,
+    O.fromNullable,
     O.getOrElse(constant(existingTopic.identifier)),
   ),
   updatedAt: currentDate,

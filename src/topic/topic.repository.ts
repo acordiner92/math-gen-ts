@@ -28,7 +28,10 @@ export const create = (topic: Topic): TE.TaskEither<Error, Topic> =>
 export const update = (existingTopic: Topic): TE.TaskEither<Error, void> =>
   pipe(
     TE.tryCatch(
-      () => knex<TopicDb>('topic').where({ id: topicId }).update(existingTopic),
+      () =>
+        knex<TopicDb>('topic')
+          .where({ id: existingTopic.id })
+          .update(existingTopic),
       () => new Error('Failed to create question.'),
     ),
   );

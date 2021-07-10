@@ -1,4 +1,3 @@
-import { pipe } from 'fp-ts/lib/function';
 import { FastifyRequest, FastifyReply } from 'fastify';
 import * as TopicService from './topic.service';
 import * as RTE from 'fp-ts/ReaderTaskEither';
@@ -11,12 +10,19 @@ export const createTopic = (
   }>,
   _reply: FastifyReply,
 ): RTE.ReaderTaskEither<CreateTopicEnv, Error, Topic> =>
-  pipe(RTE.right(request.body), RTE.chain(TopicService.createTopic));
+  TopicService.createTopic(request.body);
 
 export const updateTopic = (
   request: FastifyRequest<{
     Body: UpdateTopicDto;
+    Params: { id: string };
   }>,
   _reply: FastifyReply,
 ): RTE.ReaderTaskEither<UpdateTopicEnv, Error, void> =>
-  pipe(RTE.right(request.body), RTE.chain(TopicService.updateTopic));
+  TopicService.updateTopic(request.params.id)(request.body);
+
+export const deleteTopic = (
+  request: FastifyRequest<{ Params: { id: string } }>,
+  _reply: FastifyReply,
+): RTE.ReaderTaskEither<UpdateTopicEnv, Error, void> =>
+  TopicService.deleteTopic(request.params.id);

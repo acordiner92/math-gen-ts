@@ -22,23 +22,24 @@ export const createTopic = (
     ),
   );
 
-export const updateTopic = (
-  topicId: string,
-  dto: UpdateTopicDto,
-): RTE.ReaderTaskEither<UpdateTopicEnv, Error, void> =>
-  pipe(
-    RTE.ask<UpdateTopicEnv>(),
-    RTE.chainTaskEitherK(env =>
-      pipe(
-        topicId,
-        env.getTopicById,
-        TE.chain(
-          TE.fromOption(() => new Error(`No topic found for topic ${topicId}`)),
+export const updateTopic =
+  (topicId: string) =>
+  (dto: UpdateTopicDto): RTE.ReaderTaskEither<UpdateTopicEnv, Error, void> =>
+    pipe(
+      RTE.ask<UpdateTopicEnv>(),
+      RTE.chainTaskEitherK(env =>
+        pipe(
+          topicId,
+          env.getTopicById,
+          TE.chain(
+            TE.fromOption(
+              () => new Error(`No topic found for topic ${topicId}`),
+            ),
+          ),
+          TE.chain(x => env.updateTopic(update(dto, x, new Date()))),
         ),
-        TE.chain(x => env.updateTopic(update(dto, x, new Date()))),
       ),
-    ),
-  );
+    );
 
 export const deleteTopic = (
   topicId: string,
