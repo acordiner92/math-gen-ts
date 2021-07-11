@@ -7,11 +7,11 @@
     "start": "nodemon",
     "format": "prettier --check \"src/**/*.{js,jsx,ts,tsx}\"",
     "lint": "eslint ./src --maxWorkers=50%",
-    "test": "npm run test:unit & npm run test:int",
-    "test:unit": "jest src/**/*.unit.test.ts",
-    "test:int": "jest src/**/*.int.test.ts",
+    "test": "concurrently \"npm run test:unit\" \"npm run test:e2e\"",
+    "test:unit": "jest -c jest.unit.config.mjs",
+    "test:e2e": "jest -c jest.e2e.config.mjs --forceExit",
     "hello": "schemats generate -c postgres://postgres:postgres@localhost:5432/math_gen -o math_gen.ts",
-    "db:create": "knex migrate:make --migrations-directory ./db/migrations -x ts --",
+    "db:create": "knex migrate:make --migrations-directory ./db/migrations --",
     "db:migrate": "db-migrate up -m './db/migrations' --sql-file"
   },
   "repository": {
@@ -32,6 +32,7 @@
     "@typescript-eslint/eslint-plugin": "^4.28.2",
     "@typescript-eslint/parser": "^4.28.2",
     "callsites": "^3.1.0",
+    "concurrently": "^6.2.0",
     "db-migrate": "^0.11.12",
     "db-migrate-pg": "^1.2.2",
     "esbuild": "^0.12.15",

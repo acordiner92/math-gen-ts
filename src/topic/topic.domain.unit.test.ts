@@ -2,11 +2,11 @@
 /* eslint-disable fp/no-nil */
 import { v4 as uuidv4 } from 'uuid';
 import {
+  getTestFileName,
   CreateTopicDtoFactory,
   TopicFactory,
   UpdateTopicDtoFactory,
-} from '../../test/factories/topic.factory';
-import { getTestFileName } from '../../test';
+} from '../../test';
 import { create, remove, update } from './topic.domain';
 
 describe(getTestFileName(), () => {

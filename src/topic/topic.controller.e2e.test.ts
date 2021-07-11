@@ -1,12 +1,12 @@
 /* eslint-disable fp/no-nil */
 /* eslint-disable fp/no-unused-expression */
-import { getTestFileName } from '../../test';
-import { clean } from 'knex-cleaner';
-import { v4 as uuidv4 } from 'uuid';
 import {
+  getTestFileName,
+  clearDb,
   CreateTopicDtoFactory,
   TopicFactory,
-} from '../../test/factories/topic.factory';
+} from '../../test';
+import { v4 as uuidv4 } from 'uuid';
 import { build } from '../app';
 import { knex } from '../data/knex';
 import { TopicDb } from '../data/types';
@@ -14,16 +14,8 @@ import { createTopic, updateTopic, deleteTopic } from './topic.controller';
 import { Topic } from './topic.domain';
 
 describe(getTestFileName(), () => {
-  beforeAll(async () => {
-    await knex.migrate.latest();
-  });
-
   beforeEach(async () => {
-    await clean(knex);
-  });
-
-  afterAll(async () => {
-    await knex.destroy();
+    await clearDb(knex);
   });
 
   const app = build();

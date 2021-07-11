@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable fp/no-unused-expression */
 /* eslint-disable fp/no-nil */
-import { Knex } from 'knex';
+/* eslint-disable fp/no-mutation */
 
-export async function up(knex: Knex): Promise<void> {
+exports.up = function (knex) {
   return knex.schema.createTable('topic', table => {
     table.uuid('id').primary();
     table.string('name').notNullable();
@@ -12,6 +12,6 @@ export async function up(knex: Knex): Promise<void> {
     table.date('created_at').notNullable();
     table.date('updated_at').notNullable();
   });
-}
+};
 
-export async function down(): Promise<void> {}
+exports.down = function (_knex) {};
