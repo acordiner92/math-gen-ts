@@ -3,26 +3,17 @@ import { TopicDb } from '../data/types';
 import { Topic } from './topic.domain';
 import * as TE from 'fp-ts/TaskEither';
 import * as O from 'fp-ts/Option';
-import { pipe, flow } from 'fp-ts/function';
+import { pipe, flow, constVoid } from 'fp-ts/function';
 
 const mapDbToDomain = (row: TopicDb): Topic => ({ ...row });
 
 export const create = (topic: Topic): TE.TaskEither<Error, Topic> =>
   pipe(
     TE.tryCatch(
-      () => knex<TopicDb>('topic').insert(topic).returning('id'),
+      () => knex<TopicDb>('topic').insert(topic),
       () => new Error('Failed to create question.'),
     ),
-    TE.map(x => x[0]),
-    TE.chain(
-      flow(
-        O.fromNullable,
-        TE.fromOption(() => new Error('Failed to insert question to database')),
-      ),
-    ),
-    TE.chain(getById),
-    TE.chain(TE.fromOption(() => new Error('Unable to find inserted'))),
-    TE.map(mapDbToDomain),
+    TE.map(() => topic),
   );
 export type Create = typeof create;
 
@@ -35,6 +26,7 @@ export const update = (existingTopic: Topic): TE.TaskEither<Error, void> =>
           .update(existingTopic),
       () => new Error('Failed to create question.'),
     ),
+    TE.map(constVoid),
   );
 export type Update = typeof update;
 

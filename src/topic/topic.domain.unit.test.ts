@@ -7,7 +7,7 @@ import {
   UpdateTopicDtoFactory,
 } from '../../test/factories/topic.factory';
 import { getTestFileName } from '../../test';
-import { create, remove, update } from '../topic/topic.domain';
+import { create, remove, update } from './topic.domain';
 
 describe(getTestFileName(), () => {
   describe(create.name, () => {

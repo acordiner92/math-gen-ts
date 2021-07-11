@@ -15,5 +15,5 @@
       "isolatedModules": true,
       "noEmit": true
     },
-    "include": ["./src", "./types", "./test"]
+    "include": ["./src", "./types", "./test", "./db/migrations"]
   }

@@ -11,6 +11,7 @@ import {
   remove,
 } from './topic.domain';
 import { CreateTopicEnv, DeleteTopicEnv, UpdateTopicEnv } from '.';
+import { ResourceNotFound } from '../common';
 
 export const createTopic = (
   dto: CreateTopicDto,
@@ -31,9 +32,11 @@ export const updateTopic =
         pipe(
           topicId,
           env.getTopicById,
-          TE.chain(
-            TE.fromOption(
-              () => new Error(`No topic found for topic ${topicId}`),
+          TE.chainW(
+            pipe(
+              TE.fromOption(
+                () => new ResourceNotFound(topicId, 'No topic found for topic'),
+              ),
             ),
           ),
           TE.chain(x => env.updateTopic(update(dto, x, new Date()))),
@@ -50,8 +53,10 @@ export const deleteTopic = (
       pipe(
         topicId,
         env.getTopicById,
-        TE.chain(
-          TE.fromOption(() => new Error(`No topic found for topic ${topicId}`)),
+        TE.chainW(
+          TE.fromOption(
+            () => new ResourceNotFound(topicId, 'No topic found for topic'),
+          ),
         ),
         TE.chain(x => env.updateTopic(remove(x, new Date()))),
       ),
