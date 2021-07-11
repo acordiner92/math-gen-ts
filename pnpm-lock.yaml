@@ -33,10 +33,10 @@ specifiers:
   monocle-ts: ^2.3.10
   newtype-ts: ^0.3.4
   nodemon: ^2.0.9
-  pattern-matching-ts: ^2.0.0
   pg: ^8.6.0
   prettier: ^2.3.2
   sqlite3: ^5.0.2
+  ts-pattern: ^3.2.1
   typescript: ^4.3.5
   uuid: ^8.3.2
 
@@ -49,8 +49,8 @@ dependencies:
   io-ts-types: 0.5.16_328c732dee69746ca084ac31d3786b3e
   knex: 0.95.6_pg@8.6.0+sqlite3@5.0.2
   knex-stringcase: 1.4.5
-  pattern-matching-ts: 2.0.0
   pg: 8.6.0
+  ts-pattern: 3.2.1
   uuid: 8.3.2
 
 devDependencies:
@@ -4830,10 +4830,6 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /pattern-matching-ts/2.0.0:
-    resolution: {integrity: sha512-XfNA/wZ1A92Ps+jzlmFKXviAI6YQt98GwZoHVAsDEMOKYo+g5aSjvMQ3lnvYQskIYdBj30r7S4rAx/VzuxsRhA==}
-    dev: false
-
   /performance-now/2.1.0:
     resolution: {integrity: sha1-Ywn04OX6kT7BxpMHrjZLSzd8nns=}
     dev: true
@@ -5954,6 +5950,10 @@ packages:
     resolution: {integrity: sha512-L0Orpi8qGpRG//Nd+H90vFB+3iHnue1zSSGmNOOCh1GLJ7rUKVwV2HvijphGQS2UmhUZewS9VgvxYIdgr+fG1A==}
     hasBin: true
     dev: true
+
+  /ts-pattern/3.2.1:
+    resolution: {integrity: sha512-JmcPe/0c9yRLyMga3nxyjEXOB8QXJkjJo2OAp78eHVD0HjWU9WWtKiazxF+Uz6ZFrBkFnwFZFEJrxT0uEo6Jrg==}
+    dev: false
 
   /tslib/1.14.1:
     resolution: {integrity: sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==}

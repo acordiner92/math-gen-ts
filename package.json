@@ -62,8 +62,8 @@
     "io-ts-types": "^0.5.16",
     "knex": "^0.95.6",
     "knex-stringcase": "^1.4.5",
-    "pattern-matching-ts": "^2.0.0",
     "pg": "^8.6.0",
+    "ts-pattern": "^3.2.1",
     "uuid": "^8.3.2"
   }
 }

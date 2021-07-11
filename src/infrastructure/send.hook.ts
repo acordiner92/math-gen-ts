@@ -1,4 +1,6 @@
-import { FastifyRequest, FastifyReply } from 'fastify';
+import type { FastifyReply } from 'fastify';
+
+type SendNoContent = () => FastifyReply;
 
 const isEmpty = (payload: unknown) =>
   payload === undefined ||
@@ -7,7 +9,6 @@ const isEmpty = (payload: unknown) =>
   payload === '{"_tag":"Right"}';
 
 export const sendHook = async (
-  _request: FastifyRequest,
-  reply: FastifyReply,
   payload: unknown,
-): Promise<unknown> => (isEmpty(payload) ? reply.code(204).send() : payload);
+  sendNoContent: SendNoContent,
+): Promise<unknown> => (isEmpty(payload) ? await sendNoContent() : payload);
