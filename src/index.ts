@@ -1,15 +1,9 @@
-/* eslint-disable fp/no-unused-expression */
-import Fastify from 'fastify';
-import fastifyFunky from 'fastify-funky';
-import { routes as questionRoutes } from './question';
-import { routes as topicRoutes } from './topic';
+import { build } from './app';
 
 const port = 8080;
-const server = Fastify({
+const server = build({
   logger: true,
 });
 
-void server.register(fastifyFunky);
-void server.register(questionRoutes, { prefix: '/api/v1' });
-void server.register(topicRoutes, { prefix: '/api/v1' });
+// eslint-disable-next-line fp/no-unused-expression
 void server.listen(port);
