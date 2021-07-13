@@ -33,10 +33,8 @@ export const updateTopic =
           topicId,
           env.getTopicById,
           TE.chainW(
-            pipe(
-              TE.fromOption(
-                () => new ResourceNotFound(topicId, 'No topic found for topic'),
-              ),
+            TE.fromOption(
+              () => new ResourceNotFound(topicId, 'No topic found for topic'),
             ),
           ),
           TE.chain(x => env.updateTopic(update(dto, x, new Date()))),
